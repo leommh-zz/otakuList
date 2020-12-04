@@ -1,13 +1,9 @@
 import App from "next/app";
-import { Provider } from "react-redux";
 import React from "react";
-import withRedux from "next-redux-wrapper";
-import { store } from "../redux/store";
-import 'antd/dist/antd.less';
+import { wrapper } from "../redux/store";
+import "antd/dist/antd.less";
 
-console.log(store);
-
-class MyApp extends App {
+class WrappedApp extends App {
   static async getInitialProps({ Component, ctx }) {
     const pageProps = Component.getInitialProps
       ? await Component.getInitialProps(ctx)
@@ -21,16 +17,8 @@ class MyApp extends App {
     //pageProps that were returned  from 'getInitialProps' are stored in the props i.e. pageprops
     const { Component, pageProps } = this.props;
 
-    return (
-      <Provider store={store}>
-        <Component {...pageProps} />
-      </Provider>
-    );
+    return <Component {...pageProps} />;
   }
 }
 
-//makeStore function that returns a new store for every request
-const makeStore = () => store;
-
-//withRedux wrapper that passes the store to the App Component
-export default withRedux(makeStore)(MyApp);
+export default wrapper.withRedux(WrappedApp);
