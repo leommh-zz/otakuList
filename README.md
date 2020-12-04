@@ -17,7 +17,8 @@ Para rodar o projeto é necessário:
   `` npm run build ``
 
 
-## Estrutura do projeto
+
+### Estrutura do projeto
 
 ```
 otakulist/
