@@ -1,46 +1,20 @@
 import React from "react";
-import {
-  Image,
-  Divider,
-  Typography,
-  Tag,
-  Row,
-  Col,
-  List,
-  Avatar,
-  Space,
-} from "antd";
+import { Divider, Typography, Tag, Row, Col } from "antd";
+import YouTube from "react-youtube";
+const { Paragraph } = Typography;
 
-const { Title, Paragraph } = Typography;
-
-function truncate(input) {
-  if (!!input === false || typeof input !== "string") return "";
-  if (input.length > 200) {
-    return input.substring(0, 200) + "...";
-  }
-  return input;
-}
+const youtubeOpts = {
+  height: "290",
+  width: "100%",
+};
 
 const RightInfo = ({ data, included }) => {
   console.log(data);
   const { attributes } = data;
-  const {
-    averageRating,
-    canonicalTitle,
-    coverImage,
-    description,
-    episodeCount,
-    status,
-    synopsis,
-    popularityRank,
-    ratingRank,
-    showType,
-  } = attributes;
+  const { synopsis, youtubeVideoId } = attributes;
 
   const categories =
     !!included && included.filter((item) => item.type === "categories");
-  const episodes =
-    !!included && included.filter((item) => item.type === "episodes");
 
   return (
     <div>
@@ -63,40 +37,12 @@ const RightInfo = ({ data, included }) => {
         </>
       )}
 
-      {!!episodes && (
+      <Divider orientation="left">Synopsis</Divider>
+      <Paragraph level={4}>{synopsis}</Paragraph>
+      {!!youtubeVideoId && (
         <>
-          <Divider orientation="left">Episodes ({episodeCount})</Divider>
-          <List
-            itemLayout="horizontal"
-            dataSource={episodes}
-            renderItem={(item) => {
-              let extraProps = {};
-              if (!!item.attributes.thumbnail) {
-                extraProps = {
-                  extra: (
-                    <Image
-                      className="otaku-list-image"
-                      width={150}
-                      alt="logo"
-                      src={item.attributes.thumbnail.original}
-                    />
-                  ),
-                };
-              }
-
-              return (
-                <List.Item {...extraProps}>
-                  <List.Item.Meta
-                    title={item.attributes.canonicalTitle}
-                    description={truncate(item.attributes.synopsis)}
-                  />
-                </List.Item>
-              );
-            }}
-            pagination={{
-              pageSize: 10,
-            }}
-          />
+          <Divider orientation="left">Trailer</Divider>
+          <YouTube videoId={youtubeVideoId} opts={youtubeOpts} />
         </>
       )}
     </div>

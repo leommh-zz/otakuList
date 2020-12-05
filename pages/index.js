@@ -18,7 +18,7 @@ class Home extends Component {
     if (!!query.page && Number(query.page) > 0) {
       this.page = query.page;
     } else {
-      this.page =1;
+      this.page = 1;
     }
 
     this.state = {
@@ -63,9 +63,7 @@ class Home extends Component {
       <>
         <Row gutter={[24, 24]} wrap={true}>
           {list.map((card) => {
-            return (
-              <Card key={card.id} {...card} />
-            );
+            return <Card key={card.id} {...card} />;
           })}
         </Row>
         <Pagination

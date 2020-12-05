@@ -4,7 +4,7 @@ import { Empty } from "antd";
 const CustomEmpty = () => {
   return (
     <div className="otaku-empty">
-        <Empty />
+      <Empty />
     </div>
   );
 };

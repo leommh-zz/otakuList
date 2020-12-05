@@ -7,7 +7,7 @@ const CustomFooter = () => {
   const year = new Date().getFullYear();
   return (
     <Footer style={{ textAlign: "center" }}>
-        Otaku List ©{year} criado por Leonardo Morini
+      Otaku List ©{year} criado por Leonardo Morini
     </Footer>
   );
 };

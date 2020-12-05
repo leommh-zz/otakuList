@@ -1,6 +1,5 @@
 import React from "react";
 import { Layout } from "antd";
-import SideMenu from "./SideMenu";
 import Footer from "./Footer";
 import Header from "./Header";
 const { Content } = Layout;

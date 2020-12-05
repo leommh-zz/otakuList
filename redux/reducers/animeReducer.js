@@ -13,7 +13,7 @@ const animeReducer = (state = INITIAL_STATE, action) => {
         ...state,
         data,
         included: included || null,
-      }
+      };
     }
     default:
       return state;

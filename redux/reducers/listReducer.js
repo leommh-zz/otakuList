@@ -8,12 +8,15 @@ const INITIAL_STATE = {
 const listReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case GET_LIST: {
-      const { data, meta: { count } } = action.payload;
+      const {
+        data,
+        meta: { count },
+      } = action.payload;
       return {
         ...state,
         list: data,
-        count  
-      }
+        count,
+      };
     }
     default:
       return state;

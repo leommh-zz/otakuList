@@ -65,7 +65,7 @@ class AnimePage extends Component {
         <CustomLayout>
           <Loader />
         </CustomLayout>
-      )
+      );
     }
 
     return (

@@ -7,7 +7,7 @@ import animeReducer from "./animeReducer";
 /** combinando os reducers */
 const appReducer = combineReducers({
   listReducer,
-  animeReducer
+  animeReducer,
 });
 
 export default appReducer;

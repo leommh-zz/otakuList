@@ -1,27 +1,28 @@
 import React from "react";
-import { Image, Divider, Typography, Tag, Row, Col } from "antd";
-import YouTube from 'react-youtube';
-const { Title, Paragraph } = Typography;
+import { Image, Divider, Typography, Tag, Row, Col, List } from "antd";
 
-const youtubeOpts = {
-  height: '290',
-  width: '100%',
-};
+const { Title } = Typography;
 
-const LeftInfo = ({ data }) => {
+function truncate(input) {
+  if (!!input === false || typeof input !== "string") return "";
+  if (input.length > 200) {
+    return input.substring(0, 200) + "...";
+  }
+  return input;
+}
+
+const fallback = "/images/no_image.png";
+
+const LeftInfo = ({ data, included }) => {
   const { attributes } = data;
   const {
-    averageRating,
     canonicalTitle,
     coverImage,
-    description,
     episodeCount,
     status,
-    synopsis,
     popularityRank,
     ratingRank,
     showType,
-    youtubeVideoId
   } = attributes;
 
   let cover = null;
@@ -29,7 +30,10 @@ const LeftInfo = ({ data }) => {
     cover = coverImage.large;
   }
 
-  const fallback = "/images/no_image.png";
+  const episodes =
+    !!included && included.filter((item) => item.type === "episodes");
+
+  console.log(episodes);
 
   return (
     <div>
@@ -47,27 +51,74 @@ const LeftInfo = ({ data }) => {
         {canonicalTitle}
       </Title>
       <Row gutter={[5, 5]}>
-        <Col>
-          {status && <Tag color="magenta">Status: {status}</Tag>}
+        {status && (
+          <Col>
+            <Tag color="magenta">Status: {status}</Tag>
+          </Col>
+        )}
 
-          {episodeCount && <Tag color="red">Episodes: {episodeCount}</Tag>}
+        {episodeCount && (
+          <Col>
+            <Tag color="red">Episodes: {episodeCount}</Tag>
+          </Col>
+        )}
 
-          {popularityRank && <Tag color="volcano">Rank: {popularityRank}</Tag>}
+        {popularityRank && (
+          <Col>
+            <Tag color="volcano">Rank: {popularityRank}</Tag>
+          </Col>
+        )}
 
-          {ratingRank && <Tag color="orange">Rating: {ratingRank}</Tag>}
+        {ratingRank && (
+          <Col>
+            <Tag color="orange">Rating: {ratingRank}</Tag>
+          </Col>
+        )}
 
-          {showType && <Tag color="gold">Type: {showType}</Tag>}
-        </Col>
+        {showType && (
+          <Col>
+            <Tag color="gold">Type: {showType}</Tag>
+          </Col>
+        )}
       </Row>
-      <Divider orientation="left">Synopsis</Divider>
-      <Paragraph level={4}>{synopsis}</Paragraph>
-      {!!youtubeVideoId && (
+
+      {!!episodes && (
         <>
-          <Divider orientation="left">Trailer</Divider>
-          <YouTube videoId={youtubeVideoId} opts={youtubeOpts} />
+          <Divider orientation="left">Episodes ({episodeCount})</Divider>
+          <List
+            itemLayout="vertical"
+            dataSource={episodes}
+            renderItem={(item) => {
+              let extraProps = {};
+              if (!!item.attributes.thumbnail) {
+                extraProps = {
+                  extra: (
+                    <Image
+                      className="otaku-list-image"
+                      width={150}
+                      alt="logo"
+                      src={item.attributes.thumbnail.original}
+                    />
+                  ),
+                };
+              }
+
+              return (
+                <List.Item {...extraProps}>
+                  <List.Item.Meta
+                    title={item.attributes.canonicalTitle}
+                    description={truncate(item.attributes.synopsis)}
+                  />
+                </List.Item>
+              );
+            }}
+            pagination={{
+              pageSize: 10,
+              showSizeChanger: false,
+            }}
+          />
         </>
       )}
-    
     </div>
   );
 };
