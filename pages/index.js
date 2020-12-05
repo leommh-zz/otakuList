@@ -64,9 +64,7 @@ class Home extends Component {
         <Row gutter={[24, 24]} wrap={true}>
           {list.map((card) => {
             return (
-              <Col flex={1} key={card.id}>
-                <Card {...card} />
-              </Col>
+              <Card key={card.id} {...card} />
             );
           })}
         </Row>
