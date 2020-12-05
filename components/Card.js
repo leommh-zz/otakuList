@@ -8,25 +8,33 @@ import {
 
 const { Meta } = Card;
 
-const AnimeCard = ({ loading }) => {
+const AnimeCard = ({ attributes, relationships }) => {
+  const {
+    averageRating,
+    canonicalTitle,
+    coverImage,
+    description,
+    episodeCount,
+    status,
+    synopsis,
+  } = attributes;
+  let avatar = null;
+  if (!!coverImage && coverImage.small) {
+    avatar = coverImage.small;
+  }
   return (
     <Card
-        style={{ width: 300, marginTop: 16 }}
-        // actions={[
-        // <SettingOutlined key="setting" />,
-        // <EditOutlined key="edit" />,
-        // <EllipsisOutlined key="ellipsis" />,
-        // ]}
+      style={{ width: 300, marginTop: 16 }}
+      // actions={[
+      // <SettingOutlined key="setting" />,
+      // <EditOutlined key="edit" />,
+      // <EllipsisOutlined key="ellipsis" />,
+      // ]}
     >
-        <Skeleton loading={loading} avatar active>
-        <Meta
-            avatar={
-            <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-            }
-            title="Card title"
-            description="This is the description"
-        />
-        </Skeleton>
+      <Meta
+        avatar={<Avatar src={avatar} />}
+        title={canonicalTitle}
+      />
     </Card>
   );
 };

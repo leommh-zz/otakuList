@@ -2,12 +2,19 @@ import { GET_LIST } from "../types";
 
 const INITIAL_STATE = {
   list: [],
+  count: 0,
 };
 
 const counterReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case GET_LIST:
-      return state;
+    case GET_LIST: {
+      const { data, meta: { count } } = action.payload;
+      return {
+        ...state,
+        list: data,
+        count  
+      }
+    }
     default:
       return state;
   }
