@@ -23,7 +23,6 @@
     "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
-    "@umijs/plugin-antd": "^0.9.1",
     "css-loader": "^5.0.1"
   }
 }
