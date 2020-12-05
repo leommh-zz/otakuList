@@ -1,6 +1,12 @@
 import React from "react";
-import { Image, Divider, Typography, Tag, Row, Col, PageHeader } from "antd";
+import { Image, Divider, Typography, Tag, Row, Col } from "antd";
+import YouTube from 'react-youtube';
 const { Title, Paragraph } = Typography;
+
+const youtubeOpts = {
+  height: '290',
+  width: '100%',
+};
 
 const LeftInfo = ({ data }) => {
   const { attributes } = data;
@@ -14,7 +20,8 @@ const LeftInfo = ({ data }) => {
     synopsis,
     popularityRank,
     ratingRank,
-    showType
+    showType,
+    youtubeVideoId
   } = attributes;
 
   let cover = null;
@@ -54,7 +61,12 @@ const LeftInfo = ({ data }) => {
       </Row>
       <Divider orientation="left">Synopsis</Divider>
       <Paragraph level={4}>{synopsis}</Paragraph>
-
+      {!!youtubeVideoId && (
+        <>
+          <Divider orientation="left">Trailer</Divider>
+          <YouTube videoId={youtubeVideoId} opts={youtubeOpts} />
+        </>
+      )}
     
     </div>
   );

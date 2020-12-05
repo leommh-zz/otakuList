@@ -1,7 +1,25 @@
 import React from "react";
-import { Image, Divider, Typography, Tag, Row, Col } from "antd";
-import YouTube from 'react-youtube';
+import {
+  Image,
+  Divider,
+  Typography,
+  Tag,
+  Row,
+  Col,
+  List,
+  Avatar,
+  Space,
+} from "antd";
+
 const { Title, Paragraph } = Typography;
+
+function truncate(input) {
+  if (!!input === false || typeof input !== "string") return "";
+  if (input.length > 200) {
+    return input.substring(0, 200) + "...";
+  }
+  return input;
+}
 
 const RightInfo = ({ data, included }) => {
   console.log(data);
@@ -17,26 +35,25 @@ const RightInfo = ({ data, included }) => {
     popularityRank,
     ratingRank,
     showType,
-    youtubeVideoId,
   } = attributes;
 
-  const youtubeOpts = {
-    height: '290',
-    width: '100%',
-  };
+  const categories =
+    !!included && included.filter((item) => item.type === "categories");
+  const episodes =
+    !!included && included.filter((item) => item.type === "episodes");
 
   return (
     <div>
-      {!!included && (
+      {!!categories && (
         <>
           <Divider orientation="left" className="otaku-first-divider">
             Categories
           </Divider>
           <Row gutter={[5, 5]}>
-            {included.map((item) => {
+            {categories.map((item) => {
               if (item.type === "categories") {
                 return (
-                  <Col>
+                  <Col key={item.id}>
                     <Tag color="#9000DD">{item.attributes.title}</Tag>
                   </Col>
                 );
@@ -46,14 +63,42 @@ const RightInfo = ({ data, included }) => {
         </>
       )}
 
-      {!!youtubeVideoId && (
+      {!!episodes && (
         <>
-          <Divider orientation="left">Trailer</Divider>
-          <YouTube videoId={youtubeVideoId} opts={youtubeOpts} />
+          <Divider orientation="left">Episodes ({episodeCount})</Divider>
+          <List
+            itemLayout="horizontal"
+            dataSource={episodes}
+            renderItem={(item) => {
+              let extraProps = {};
+              if (!!item.attributes.thumbnail) {
+                extraProps = {
+                  extra: (
+                    <Image
+                      className="otaku-list-image"
+                      width={150}
+                      alt="logo"
+                      src={item.attributes.thumbnail.original}
+                    />
+                  ),
+                };
+              }
+
+              return (
+                <List.Item {...extraProps}>
+                  <List.Item.Meta
+                    title={item.attributes.canonicalTitle}
+                    description={truncate(item.attributes.synopsis)}
+                  />
+                </List.Item>
+              );
+            }}
+            pagination={{
+              pageSize: 10,
+            }}
+          />
         </>
       )}
-
-      
     </div>
   );
 };
