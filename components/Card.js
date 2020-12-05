@@ -16,7 +16,9 @@ const AnimeCard = ({ id, attributes, relationships }) => {
     popularityRank,
     ratingRank,
     showType,
+    slug,
   } = attributes;
+
   let cover = null;
   if (!!coverImage && coverImage.original) {
     cover = coverImage.original;
@@ -26,12 +28,12 @@ const AnimeCard = ({ id, attributes, relationships }) => {
 
   return (
     <Col xs={24} sm={24} md={12} lg={8} xl={6}>
-      <Link href={`anime/${id}`}>
+      <Link href={`anime/${id}-${slug}`}>
         <Card hoverable flex={1} style={{ marginTop: 16 }}>
           <Title level={4} ellipsis={{ rows: 1, expandable: false }}>
             {canonicalTitle}
           </Title>
-          <div className="card-image">
+          <div className="otaku-image">
             <Image
               width={"100%"}
               height={150}
@@ -42,23 +44,15 @@ const AnimeCard = ({ id, attributes, relationships }) => {
             />
           </div>
           <Row gutter={[5, 5]}>
-            {episodeCount && (
-              <Col>
-                <Tag color="red">Episodes: {episodeCount}</Tag>
-              </Col>
-            )}
+            <Col>
+              {episodeCount && <Tag color="red">Episodes: {episodeCount}</Tag>}
 
-            {popularityRank && (
-              <Col>
+              {popularityRank && (
                 <Tag color="volcano">Rank: {popularityRank}</Tag>
-              </Col>
-            )}
+              )}
 
-            {ratingRank && (
-              <Col>
-                <Tag color="orange">Rating: {ratingRank}</Tag>
-              </Col>
-            )}
+              {ratingRank && <Tag color="orange">Rating: {ratingRank}</Tag>}
+            </Col>
           </Row>
 
           <Paragraph

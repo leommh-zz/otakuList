@@ -4,13 +4,14 @@ import { connect } from "react-redux";
 
 import CustomLayout from "../../components/CustomLayout";
 import CardsLoader from "../../components/CardsLoader";
+import AnimeContent from "../../components/Anime/Content";
 
 import { getAnimeData } from "../../redux/actions/animeActions";
 
 class AnimePage extends Component {
   state = {
-    loading: true
-  }
+    loading: true,
+  };
 
   componentDidMount() {
     this.getData();
@@ -30,9 +31,10 @@ class AnimePage extends Component {
   }
 
   getData = () => {
-    const { id } = this.props.router.query;
+    const idAndSlug = this.props.router.query.id;
+    const id = idAndSlug.split("-")[0];
     this.props.getAnimeData(id);
-  }
+  };
 
   renderAnime = () => {
     const { attributes } = this.props.data;
@@ -51,26 +53,34 @@ class AnimePage extends Component {
         <span>{canonicalTitle}</span>
       </div>
     );
-  }
+  };
 
   render() {
     const { loading } = this.state;
+    const { included, data } = this.props;
 
     return (
       <CustomLayout>
-        {loading ? <CardsLoader /> : this.renderAnime()}
+        {loading ? (
+          <CardsLoader />
+        ) : (
+          <AnimeContent data={data} included={included} />
+        )}
       </CustomLayout>
     );
   }
 }
 
-
 const mapStateToProps = (state) => ({
-    data: state.animeReducer.data,
+  data: state.animeReducer.data,
+  included: state.animeReducer.included,
 });
-  
+
 const mapDispatchToProps = {
-    getAnimeData,
+  getAnimeData,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(AnimePage));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(AnimePage));
