@@ -2,6 +2,7 @@ import App from "next/app";
 import React from "react";
 import { wrapper } from "../redux/store";
 import "antd/dist/antd.less";
+import "../assets/styles/custom.less";
 
 class WrappedApp extends App {
   static async getInitialProps({ Component, ctx }) {

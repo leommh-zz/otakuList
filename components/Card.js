@@ -1,5 +1,6 @@
 import React from "react";
 import { Skeleton, Card, Avatar } from "antd";
+import Link from 'next/link';
 import {
   EditOutlined,
   EllipsisOutlined,
@@ -8,7 +9,7 @@ import {
 
 const { Meta } = Card;
 
-const AnimeCard = ({ attributes, relationships }) => {
+const AnimeCard = ({ id, attributes, relationships }) => {
   const {
     averageRating,
     canonicalTitle,
@@ -23,19 +24,21 @@ const AnimeCard = ({ attributes, relationships }) => {
     avatar = coverImage.small;
   }
   return (
-    <Card
-      style={{ width: 300, marginTop: 16 }}
-      // actions={[
-      // <SettingOutlined key="setting" />,
-      // <EditOutlined key="edit" />,
-      // <EllipsisOutlined key="ellipsis" />,
-      // ]}
-    >
-      <Meta
-        avatar={<Avatar src={avatar} />}
-        title={canonicalTitle}
-      />
-    </Card>
+    <Link href={`anime/${id}`}>
+      <Card
+        style={{ width: 300, marginTop: 16 }}
+        // actions={[
+        // <SettingOutlined key="setting" />,
+        // <EditOutlined key="edit" />,
+        // <EllipsisOutlined key="ellipsis" />,
+        // ]}
+      >
+        <Meta
+          avatar={<Avatar src={avatar} />}
+          title={canonicalTitle}
+        />
+      </Card>
+    </Link>
   );
 };
 

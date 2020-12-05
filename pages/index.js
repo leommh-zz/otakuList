@@ -1,13 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Layout, Pagination, Menu, Row, Col } from "antd";
+import { Pagination, Row, Col } from "antd";
+
+import CustomLayout from "../components/CustomLayout";
+import Card from "../components/Card";
+import CardsLoader from "../components/CardsLoader";
 
 import { getList } from "../redux/actions/listActions";
-import SideMenu from "../components/SideMenu";
-import Card from "../components/Card";
-import Footer from "../components/Footer";
-import CardsLoader from "../components/CardsLoader";
-const { Header, Content, Sider } = Layout;
 
 class Home extends Component {
   constructor(props) {
@@ -38,14 +37,14 @@ class Home extends Component {
 
   handleGetList = () => {
     this.props.getList(this.page);
-  }
+  };
 
   onChangePage = (page) => {
     this.page = page;
     this.setState({ loading: true }, () => {
       this.handleGetList();
     });
-  }
+  };
 
   renderCards = () => {
     const { list, count } = this.props;
@@ -56,13 +55,18 @@ class Home extends Component {
         <Row>
           {list.map((card) => {
             return (
-              <Col xs={2} sm={4} md={6} lg={8} xl={6} key={card.id + "_card_anime"}>
+              <Col xs={16} sm={16} md={12} lg={16} xl={6} key={card.id}>
                 <Card {...card} />
               </Col>
             );
           })}
         </Row>
-        <Pagination showSizeChanger={false} onChange={this.onChangePage} defaultCurrent={this.page} total={total} />
+        <Pagination
+          showSizeChanger={false}
+          onChange={this.onChangePage}
+          defaultCurrent={this.page}
+          total={total}
+        />
       </>
     );
   };
@@ -71,20 +75,9 @@ class Home extends Component {
     const { loading } = this.state;
 
     return (
-      <Layout>
-        <SideMenu />
-        <Layout>
-          <Content style={{ margin: "24px 16px 0" }}>
-            <div
-              className="site-layout-background"
-              style={{ padding: 24, minHeight: 360 }}
-            >
-              {loading ? <CardsLoader /> : this.renderCards()}
-            </div>
-          </Content>
-          <Footer />
-        </Layout>
-      </Layout>
+      <CustomLayout>
+        {loading ? <CardsLoader /> : this.renderCards()}
+      </CustomLayout>
     );
   }
 }

@@ -5,7 +5,7 @@ const INITIAL_STATE = {
   count: 0,
 };
 
-const counterReducer = (state = INITIAL_STATE, action) => {
+const listReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case GET_LIST: {
       const { data, meta: { count } } = action.payload;
@@ -20,4 +20,4 @@ const counterReducer = (state = INITIAL_STATE, action) => {
   }
 };
 
-export default counterReducer;
+export default listReducer;
