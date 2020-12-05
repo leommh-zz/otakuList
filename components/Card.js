@@ -26,7 +26,7 @@ const AnimeCard = ({ id, attributes, relationships }) => {
   return (
     <Link href={`anime/${id}`}>
       <Card
-        style={{ width: 300, marginTop: 16 }}
+        style={{ width: 250, marginTop: 16 }}
         // actions={[
         // <SettingOutlined key="setting" />,
         // <EditOutlined key="edit" />,

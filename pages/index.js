@@ -60,10 +60,10 @@ class Home extends Component {
 
     return (
       <>
-        <Row>
+        <Row justify="space-between">
           {list.map((card) => {
             return (
-              <Col xs={16} sm={16} md={12} lg={16} xl={6} key={card.id}>
+              <Col key={card.id}>
                 <Card {...card} />
               </Col>
             );
