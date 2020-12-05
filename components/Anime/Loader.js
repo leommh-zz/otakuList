@@ -3,7 +3,7 @@ import { Skeleton, Row, Col } from "antd";
 
 const Loader = () => {
   return (
-    <Row wrap={true} justify="center">
+    <Row wrap={true} justify="center" align="top">
       <Col className="otaku-panel" xs={24} sm={24} md={24} lg={24} xl={14}>
         <Skeleton active={true} />
         <Skeleton active={true} />
