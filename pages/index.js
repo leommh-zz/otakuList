@@ -8,6 +8,7 @@ import Card from "../components/Card";
 import CardsLoader from "../components/CardsLoader";
 
 import { getList } from "../redux/actions/listActions";
+import { limit } from "../config";
 
 class Home extends Component {
   constructor(props) {
@@ -56,14 +57,14 @@ class Home extends Component {
 
   renderCards = () => {
     const { list, count } = this.props;
-    const total = count / 12;
+    const total = count / limit;
 
     return (
       <>
-        <Row justify="space-between">
+        <Row gutter={[24, 24]} wrap={true}>
           {list.map((card) => {
             return (
-              <Col key={card.id}>
+              <Col flex={1} key={card.id}>
                 <Card {...card} />
               </Col>
             );
