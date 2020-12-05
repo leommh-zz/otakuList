@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 import Empty from "../../components/Empty";
 import CustomLayout from "../../components/CustomLayout";
-import CardsLoader from "../../components/CardsLoader";
+import Loader from "../../components/Anime/Loader";
 import AnimeContent from "../../components/Anime/Content";
 
 import { getAnimeData } from "../../redux/actions/animeActions";
@@ -63,7 +63,7 @@ class AnimePage extends Component {
     if (loading) {
       return (
         <CustomLayout>
-          <CardsLoader />
+          <Loader />
         </CustomLayout>
       )
     }
