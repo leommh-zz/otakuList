@@ -21,7 +21,7 @@ const RightInfo = ({ data, included }) => {
   } = attributes;
 
   const youtubeOpts = {
-    height: '390',
+    height: '290',
     width: '100%',
   };
 
@@ -52,6 +52,8 @@ const RightInfo = ({ data, included }) => {
           <YouTube videoId={youtubeVideoId} opts={youtubeOpts} />
         </>
       )}
+
+      
     </div>
   );
 };

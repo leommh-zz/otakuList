@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { withRouter } from "next/router";
 import { connect } from "react-redux";
 
+import Empty from "../../components/Empty";
 import CustomLayout from "../../components/CustomLayout";
 import CardsLoader from "../../components/CardsLoader";
 import AnimeContent from "../../components/Anime/Content";
@@ -59,10 +60,18 @@ class AnimePage extends Component {
     const { loading } = this.state;
     const { included, data } = this.props;
 
+    if (loading) {
+      return (
+        <CustomLayout>
+          <CardsLoader />
+        </CustomLayout>
+      )
+    }
+
     return (
       <CustomLayout>
-        {loading ? (
-          <CardsLoader />
+        {!!data == false ? (
+          <Empty />
         ) : (
           <AnimeContent data={data} included={included} />
         )}

@@ -54,6 +54,8 @@ const LeftInfo = ({ data }) => {
       </Row>
       <Divider orientation="left">Synopsis</Divider>
       <Paragraph level={4}>{synopsis}</Paragraph>
+
+    
     </div>
   );
 };
