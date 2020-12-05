@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { withRouter } from "next/router";
 import { connect } from "react-redux";
 import { Pagination, Row, Col } from "antd";
 
@@ -11,8 +12,14 @@ import { getList } from "../redux/actions/listActions";
 class Home extends Component {
   constructor(props) {
     super(props);
+    const { query } = props.router;
 
-    this.page = 1;
+    if (!!query.page && Number(query.page) > 0) {
+      this.page = query.page;
+    } else {
+      this.page =1;
+    }
+
     this.state = {
       loading: true,
     };
@@ -42,6 +49,7 @@ class Home extends Component {
   onChangePage = (page) => {
     this.page = page;
     this.setState({ loading: true }, () => {
+      this.props.router.push(`/?page=${page}`);
       this.handleGetList();
     });
   };
@@ -91,4 +99,4 @@ const mapDispatchToProps = {
   getList,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Home));
