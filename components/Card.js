@@ -1,11 +1,6 @@
 import React from "react";
 import { Image, Card, Typography, Tag, Row, Col } from "antd";
 import Link from "next/link";
-import {
-  EditOutlined,
-  EllipsisOutlined,
-  SettingOutlined,
-} from "@ant-design/icons";
 
 const { Title, Paragraph } = Typography;
 
