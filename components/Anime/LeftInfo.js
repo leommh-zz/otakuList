@@ -33,8 +33,6 @@ const LeftInfo = ({ data, included }) => {
   const episodes =
     !!included && included.filter((item) => item.type === "episodes");
 
-  console.log(episodes);
-
   return (
     <div>
       <div className="otaku-image">

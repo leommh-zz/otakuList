@@ -9,7 +9,6 @@ const youtubeOpts = {
 };
 
 const RightInfo = ({ data, included }) => {
-  console.log(data);
   const { attributes } = data;
   const { synopsis, youtubeVideoId } = attributes;
 
