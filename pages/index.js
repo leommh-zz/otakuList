@@ -9,7 +9,7 @@ import CardsLoader from "../components/CardsLoader";
 import Filters from "../components/Filters";
 
 import { getList } from "../redux/actions/listActions";
-import { limit } from "../config";
+import { limit } from "../services/config";
 
 class Home extends Component {
   constructor(props) {

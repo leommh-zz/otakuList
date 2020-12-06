@@ -1,6 +1,6 @@
 import { GET_LIST } from "../types";
 import { fetchApi } from "../../services/api";
-import { limit } from "../../config";
+import { limit } from "../../services/config";
 
 /**
  * @todo tive que definir entre search/sort pois a api não estava suportando os dois na mesma request!
