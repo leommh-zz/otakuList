@@ -20,8 +20,8 @@ const AnimeCard = ({ id, attributes, relationships }) => {
   } = attributes;
 
   let cover = null;
-  if (!!coverImage && coverImage.original) {
-    cover = coverImage.original;
+  if (!!coverImage && coverImage.tiny) {
+    cover = coverImage.tiny;
   }
 
   const fallback = "/images/no_image.png";

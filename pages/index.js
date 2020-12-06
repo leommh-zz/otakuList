@@ -39,6 +39,7 @@ class Home extends Component {
 
   componentDidUpdate(prevProps) {
     if (this.state.loading && this.props.list !== prevProps.list) {
+      window.scrollTo(0, 0);
       this.setState({ loading: false });
     }
   }

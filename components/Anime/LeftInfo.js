@@ -5,8 +5,8 @@ const { Title } = Typography;
 
 function truncate(input) {
   if (!!input === false || typeof input !== "string") return "";
-  if (input.length > 200) {
-    return input.substring(0, 200) + "...";
+  if (input.length > 150) {
+    return input.substring(0, 150) + "...";
   }
   return input;
 }
@@ -33,6 +33,10 @@ const LeftInfo = ({ data, included }) => {
   const episodes =
     !!included && included.filter((item) => item.type === "episodes");
 
+  const onChangePage = () => {
+    window.scrollTo(0, 0);
+  };
+
   return (
     <div>
       <div className="otaku-image">
@@ -52,12 +56,6 @@ const LeftInfo = ({ data, included }) => {
         {status && (
           <Col>
             <Tag color="magenta">Status: {status}</Tag>
-          </Col>
-        )}
-
-        {episodeCount && (
-          <Col>
-            <Tag color="red">Episodes: {episodeCount}</Tag>
           </Col>
         )}
 
@@ -82,7 +80,9 @@ const LeftInfo = ({ data, included }) => {
 
       {!!episodes && (
         <>
-          <Divider orientation="left">Episodes ({episodeCount})</Divider>
+          <Divider orientation="left">
+            Episodes ({episodeCount})
+          </Divider>
           <List
             itemLayout="vertical"
             dataSource={episodes}
@@ -113,6 +113,7 @@ const LeftInfo = ({ data, included }) => {
             pagination={{
               pageSize: 10,
               showSizeChanger: false,
+              onChange: onChangePage,
             }}
           />
         </>
