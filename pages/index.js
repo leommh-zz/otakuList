@@ -6,6 +6,7 @@ import { Pagination, Row, Col } from "antd";
 import CustomLayout from "../components/CustomLayout";
 import Card from "../components/Card";
 import CardsLoader from "../components/CardsLoader";
+import Filters from "../components/Filters";
 
 import { getList } from "../redux/actions/listActions";
 import { limit } from "../config";
@@ -19,6 +20,12 @@ class Home extends Component {
       this.page = query.page;
     } else {
       this.page = 1;
+    }
+
+    if (!!query.sort) {
+      this.sort = query.page;
+    } else {
+      this.sort = 'popularityRank';
     }
 
     this.state = {
@@ -45,16 +52,24 @@ class Home extends Component {
   }
 
   handleGetList = () => {
-    this.props.getList(this.page);
+    this.props.getList(this.page, this.sort);
   };
 
   onChangePage = (page) => {
     this.page = page;
+
     this.setState({ loading: true }, () => {
       this.props.router.push(`/?page=${page}`);
       this.handleGetList();
     });
   };
+
+  onChangeSort = (sort) => {
+    this.sort = sort;
+    this.setState({ loading: true }, () => {
+      this.handleGetList();
+    });
+  }
 
   renderCards = () => {
     const { list, count } = this.props;
@@ -62,6 +77,7 @@ class Home extends Component {
 
     return (
       <>
+        <Filters defaultSort={this.sort} onChangeSort={this.onChangeSort} />
         <Row gutter={[24, 24]} wrap={true}>
           {list.map((card) => {
             return <Card key={card.id} {...card} />;
