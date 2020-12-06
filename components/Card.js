@@ -24,7 +24,7 @@ const AnimeCard = ({ id, attributes }) => {
 
   const ClickCard = React.forwardRef(({ onClick, href }, ref) => {
     return (
-      <a href={href} onClick={onClick} ref={ref}>
+      <a href={href} onClick={onClick} ref={ref} class="otaku-card">
         <Card hoverable flex={1} style={{ marginTop: 16 }}>
           <Title level={4} ellipsis={{ rows: 1, expandable: false }}>
             {canonicalTitle}
