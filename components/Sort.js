@@ -3,10 +3,10 @@ import { Select } from "antd";
 const { Option } = Select;
 
 const sorts = [
-  { id: "popularity", value: "popularityRank", name: "Popular" },
-  { id: "recents", value: "-startDate", name: "Recentes" },
-  { id: "old", value: "startDate", name: "Antigos" },
-  { id: "alphabetic", value: "slug", name: "Alfabético" },
+  { id: "popularity", value: "popularityRank", name: "Popularity" },
+  { id: "recents", value: "-startDate", name: "Recents" },
+  { id: "old", value: "startDate", name: "Old" },
+  { id: "alphabetic", value: "slug", name: "Alphabetic" },
 ];
 
 const Sort = ({ defaultSort, onChangeSort }) => {
