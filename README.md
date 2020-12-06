@@ -1,5 +1,5 @@
 # Otaku List - Catálogo de animes
-Este é um projeto de catálogo de animes, com busca e filtros. Todo o conteúdo é adquirido utilizando a api da [Kistu](https://kitsu.docs.apiary.io/#).
+Este é um projeto de catálogo de animes, com busca e filtros. Todo o conteúdo é adquirido utilizando a api da [Kitsu](https://kitsu.docs.apiary.io/#).
 
 ### Pré-requisitos
 
