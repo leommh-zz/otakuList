@@ -1,4 +1,5 @@
-# Otaku List - Indicação de animes/filmes
+# Otaku List - Catálogo de animes
+Este é um projeto de catálogo de animes, com busca e filtros. Todo o conteúdo é adquirido utilizando a api da [Kistu](https://kitsu.docs.apiary.io/#).
 
 ### Pré-requisitos
 
@@ -17,7 +18,6 @@ Para rodar o projeto é necessário:
   `` npm run build ``
 
 
-
 ### Estrutura do projeto
 
 ```
@@ -25,10 +25,12 @@ otakulist/
 ├── package.json (dependências)
 ├── next.config.js (webpack e outras configurações do nextJS)
 ├── .babelrc (configuração babel)
-├── assets (arquivos internos: less|imagens|fonts...)
+├── assets (arquivos internos: less, imagens, fonts...)
+├── components (componentes próprios)
 └── pages 
   ├── _app.js (arquivo principal do projeto)
   └── (outras páginas do projeto)
-└── public
-└── redux (configuração, actions e reducers)
+├── public
+├── redux (configuração, actions e reducers)
+└── services (configurações de serviços e api)
 ```
