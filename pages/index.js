@@ -15,18 +15,11 @@ class Home extends Component {
   constructor(props) {
     super(props);
     const { query } = props.router;
+    const { page, sort, search } = query;
 
-    if (!!query.page && Number(query.page) > 0) {
-      this.page = query.page;
-    } else {
-      this.page = 1;
-    }
-
-    if (!!query.sort) {
-      this.sort = query.page;
-    } else {
-      this.sort = 'popularityRank';
-    }
+    this.page = Number(page) > 0 ? page : 1;
+    this.sort = sort || "popularityRank";
+    this.search = search || "";
 
     this.state = {
       loading: true,
@@ -52,7 +45,7 @@ class Home extends Component {
   }
 
   handleGetList = () => {
-    this.props.getList(this.page, this.sort);
+    this.props.getList(this.page, this.sort, this.search);
   };
 
   onChangePage = (page) => {
@@ -69,7 +62,14 @@ class Home extends Component {
     this.setState({ loading: true }, () => {
       this.handleGetList();
     });
-  }
+  };
+
+  onSearch = (search) => {
+    this.search = search;
+    this.setState({ loading: true }, () => {
+      this.handleGetList();
+    });
+  };
 
   renderCards = () => {
     const { list, count } = this.props;
@@ -77,7 +77,6 @@ class Home extends Component {
 
     return (
       <>
-        <Filters defaultSort={this.sort} onChangeSort={this.onChangeSort} />
         <Row gutter={[24, 24]} wrap={true}>
           {list.map((card) => {
             return <Card key={card.id} {...card} />;
@@ -98,6 +97,11 @@ class Home extends Component {
 
     return (
       <CustomLayout>
+        <Filters 
+          defaultSort={this.sort} 
+          onChangeSort={this.onChangeSort}
+          onSearch={this.onSearch} 
+        />
         {loading ? <CardsLoader /> : this.renderCards()}
       </CustomLayout>
     );

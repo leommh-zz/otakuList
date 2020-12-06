@@ -1,30 +1,17 @@
 import React from "react";
-import { Row, Col, Select } from "antd";
+import { Row, Col } from "antd";
 
-const { Option } = Select;
+import Sort from "./Sort";
+import Search from "./Search";
 
-const sorts = [
-  { id: 'popularity', value: "popularityRank", name: "Popular" },
-  { id: 'recents', value: "-startDate", name: "Recentes" },
-  { id: 'old', value: "startDate", name: "Antigos" },
-  { id: 'alphabetic', value: "slug", name: "Alfabético" },
-];
-
-const Filters = ({ defaultSort, onChangeSort }) => {
+const Filters = (props) => {
   return (
-    <Row wrap={true} justify="end" align="top">
+    <Row gutter={[20, 5]} wrap={true} justify="end" align="top">
       <Col>
-        <Select
-          defaultValue={defaultSort || "popularityRank"}
-          style={{ width: 120 }}
-          onChange={onChangeSort}
-        >
-          {sorts.map((item) => (
-            <Option key={item.id} value={item.value}>
-              {item.name}
-            </Option>
-          ))}
-        </Select>
+        <Search {...props} />
+      </Col>
+      <Col>
+        <Sort {...props} />
       </Col>
     </Row>
   );

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import { Layout, Image } from "antd";
 import Link from "next/link";
 
@@ -8,10 +8,9 @@ const CustomHeader = () => {
   return (
     <Header style={{ textAlign: "center" }}>
       <Link href="/">
-        <Image
+        <img
           width={150}
           src="/images/logo.png"
-          preview={false}
           style={{ cursor: "pointer" }}
         />
       </Link>
@@ -19,4 +18,4 @@ const CustomHeader = () => {
   );
 };
 
-export default CustomHeader;
+export default forwardRef(CustomHeader);

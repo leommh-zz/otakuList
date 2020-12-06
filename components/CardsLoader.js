@@ -17,7 +17,7 @@ const CardsLoader = () => {
     <Row gutter={[24, 24]} wrap={true}>
       {list.map((card) => {
         return (
-          <Col xs={24} sm={24} md={12} lg={8} xl={6}>
+          <Col key={card.id} xs={24} sm={24} md={12} lg={8} xl={6}>
             <Card flex={1} style={{ marginTop: 16 }}>
               <Skeleton active paragraph={false} />
               <Skeleton.Image style={{ width: 250 }} active />

@@ -4,18 +4,14 @@ import Link from "next/link";
 
 const { Title, Paragraph } = Typography;
 
-const AnimeCard = ({ id, attributes, relationships }) => {
+const AnimeCard = ({ id, attributes }) => {
   const {
-    averageRating,
     canonicalTitle,
     coverImage,
-    description,
     episodeCount,
-    status,
     synopsis,
     popularityRank,
     ratingRank,
-    showType,
     slug,
   } = attributes;
 
@@ -26,9 +22,9 @@ const AnimeCard = ({ id, attributes, relationships }) => {
 
   const fallback = "/images/no_image.png";
 
-  return (
-    <Col xs={24} sm={24} md={12} lg={8} xl={6}>
-      <Link href={`anime/${id}-${slug}`}>
+  const ClickCard = React.forwardRef(({ onClick, href }, ref) => {
+    return (
+      <a href={href} onClick={onClick} ref={ref}>
         <Card hoverable flex={1} style={{ marginTop: 16 }}>
           <Title level={4} ellipsis={{ rows: 1, expandable: false }}>
             {canonicalTitle}
@@ -64,6 +60,14 @@ const AnimeCard = ({ id, attributes, relationships }) => {
             {synopsis}
           </Paragraph>
         </Card>
+      </a>
+    );
+  });
+
+  return (
+    <Col xs={24} sm={24} md={12} lg={8} xl={6}>
+      <Link href={`anime/${id}-${slug}`}>
+        <ClickCard />
       </Link>
     </Col>
   );
