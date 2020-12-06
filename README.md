@@ -27,7 +27,7 @@ otakulist/
 ├── .babelrc (configuração babel)
 ├── assets (arquivos internos: less, imagens, fonts...)
 ├── components (componentes próprios)
-└── pages 
+├── pages 
   ├── _app.js (arquivo principal do projeto)
   └── (outras páginas do projeto)
 ├── public
