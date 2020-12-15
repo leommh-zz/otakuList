@@ -1,10 +1,9 @@
 import App from "next/app";
 import React from "react";
-import { wrapper } from "../redux/store";
 import "antd/dist/antd.less";
 import "../assets/styles/custom.less";
 
-class WrappedApp extends App {
+class Application extends App {
   static async getInitialProps({ Component, ctx }) {
     const pageProps = Component.getInitialProps
       ? await Component.getInitialProps(ctx)
@@ -22,4 +21,4 @@ class WrappedApp extends App {
   }
 }
 
-export default wrapper.withRedux(WrappedApp);
+export default Application;

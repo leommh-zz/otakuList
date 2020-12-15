@@ -1,3 +1,5 @@
+import 'isomorphic-fetch';
+
 export function fetchApi(method = "GET", url, data) {
   const headers = {
     Accept: "application/vnd.api+json",

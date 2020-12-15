@@ -1,95 +1,50 @@
-import React, { Component } from "react";
-import { withRouter } from "next/router";
-import { connect } from "react-redux";
+import React, { useState } from "react";
 
 import Empty from "../../components/Empty";
 import CustomLayout from "../../components/CustomLayout";
 import Loader from "../../components/Anime/Loader";
 import AnimeContent from "../../components/Anime/Content";
+import { fetchApi } from "../../services/api";
 
-import { getAnimeData } from "../../redux/actions/animeActions";
+const getAnimeData = async (idAndSlug) => {
+  const id = idAndSlug.split("-")[0];
+  const response = await fetchApi(
+    "GET",
+    `/anime/${id}?include=categories,episodes,animeStaff`
+  );
+  const { data, included } = await response.json();
 
-class AnimePage extends Component {
-  state = {
-    loading: true,
-  };
+  return { data, included };
+};
 
-  componentDidMount() {
-    this.getData();
-  }
+const AnimePage = ({ data, included }) => {
+  const [loading, setLoading] = useState(false);
 
-  shouldComponentUpdate(nextProps, nextState) {
-    return (
-      this.props.data !== nextProps.data ||
-      this.state.loading !== nextState.loading
-    );
-  }
-
-  componentDidUpdate(prevProps) {
-    if (this.state.loading && this.props.data !== prevProps.data) {
-      this.setState({ loading: false });
-    }
-  }
-
-  getData = () => {
-    const idAndSlug = this.props.router.query.id;
-    const id = idAndSlug.split("-")[0];
-    this.props.getAnimeData(id);
-  };
-
-  renderAnime = () => {
-    const { attributes } = this.props.data;
-    const {
-      averageRating,
-      canonicalTitle,
-      coverImage,
-      description,
-      episodeCount,
-      status,
-      synopsis,
-    } = attributes;
-
-    return (
-      <div>
-        <span>{canonicalTitle}</span>
-      </div>
-    );
-  };
-
-  render() {
-    const { loading } = this.state;
-    const { included, data } = this.props;
-
-    if (loading) {
-      return (
-        <CustomLayout>
-          <Loader />
-        </CustomLayout>
-      );
-    }
-
+  if (loading) {
     return (
       <CustomLayout>
-        {!!data == false ? (
-          <Empty />
-        ) : (
-          <AnimeContent data={data} included={included} />
-        )}
+        <Loader />
       </CustomLayout>
     );
   }
-}
 
-const mapStateToProps = (state) => ({
-  data: state.animeReducer.data,
-  included: state.animeReducer.included,
-});
-
-const mapDispatchToProps = {
-  getAnimeData,
+  return (
+    <CustomLayout>
+      {!!data == false ? (
+        <Empty />
+      ) : (
+        <AnimeContent data={data} included={included} />
+      )}
+    </CustomLayout>
+  );
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(AnimePage));
+AnimePage.getInitialProps = async (context) => {
+  const { id } = context.query;
+
+  const animeData = await getAnimeData(id);
+
+  return animeData;
+};
+
+export default AnimePage;
