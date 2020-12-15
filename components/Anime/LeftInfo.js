@@ -1,4 +1,5 @@
 import React from "react";
+import Head from 'next/head';
 import { Image, Divider, Typography, Tag, Row, Col, List } from "antd";
 
 const { Title } = Typography;
@@ -23,6 +24,7 @@ const LeftInfo = ({ data, included }) => {
     popularityRank,
     ratingRank,
     showType,
+    synopsis
   } = attributes;
 
   let cover = null;
@@ -39,6 +41,20 @@ const LeftInfo = ({ data, included }) => {
 
   return (
     <div>
+      <Head>
+        <title>{canonicalTitle}</title>
+        <meta property="og:title" content={canonicalTitle} key="title" />
+        <meta
+          property="og:description"
+          content={synopsis}
+        />
+        {!!cover && (
+          <meta
+            property="og:image"
+            content={cover}
+          />
+        )}
+      </Head>
       <div className="otaku-image">
         <Image
           width={"100%"}

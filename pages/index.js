@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Head from 'next/head';
 import { Pagination, Row } from "antd";
 
 import CustomLayout from "../components/CustomLayout";
@@ -90,6 +91,14 @@ const Home = ({ initialStates }) => {
 
   return (
     <CustomLayout>
+      <Head>
+        <title>Otaku List</title>
+        <meta property="og:title" content="Otaku List" key="title" />
+        <meta
+          property="og:description"
+          content="Somos um site de catálogo de animes"
+        />
+      </Head>
       <Filters
         defaultSort={sort}
         onChangeSort={onChangeSort}
