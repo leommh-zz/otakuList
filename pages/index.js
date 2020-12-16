@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import Head from 'next/head';
+import Head from "next/head";
+import { useRouter } from "next/router";
 import { Pagination, Row } from "antd";
 
 import CustomLayout from "../components/CustomLayout";
@@ -30,45 +31,47 @@ const handleGetList = async (page, sort, search) => {
 };
 
 const Home = ({ initialStates }) => {
-  const [list, setList] = useState(initialStates.list);
+  const router = useRouter();
+  const [animeList, setAnimeList] = useState(initialStates.animeList);
   const [sort, setSort] = useState(initialStates.sort);
   const [search, setSearch] = useState(initialStates.search);
   const [page, setPage] = useState(initialStates.page);
-  const [count, setCount] = useState(initialStates.count);
   const [loading, setLoading] = useState(false);
 
   const updateList = async () => {
-    //Impede uma nova requisição se a tela estiver em loading;
+    //Ajuda a não ocorrer novas requests.
     if (loading) return;
 
     setLoading(true);
-    const response = await handleGetList(page, sort, search);
-    setList(response.list);
-    setCount(response.count);
-    setLoading(false);
+    const animeList = await handleGetList(page, sort, search);
+    setAnimeList(animeList);
   };
 
   useEffect(() => {
+    if (loading) {
+      setLoading(false);
+      window.scrollTo(0, 0);
+    }
+  }, [animeList]);
+
+  const onChangePage = (newPage) => {
+    setPage(newPage);
+    router.push(`/?page=${newPage}`, undefined, { shallow: true });
     updateList();
-  }, [page, sort, search]);
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [list]);
-
-  const onChangePage = (page) => {
-    setPage(page);
   };
 
-  const onChangeSort = (sort) => {
-    setSort(sort);
+  const onChangeSort = (newSort) => {
+    setSort(newSort);
+    updateList();
   };
 
-  const onSearch = (search) => {
-    setSearch(search);
+  const onSearch = (newSearch) => {
+    setSearch(newSearch);
+    updateList();
   };
 
   const renderCards = () => {
+    const { list, count } = animeList;
     const total = count / limit;
 
     return (
@@ -116,14 +119,13 @@ Home.getInitialProps = async (context) => {
   sort = sort || "popularityRank";
   search = search || "";
 
-  const { list, count } = await handleGetList(page, sort, search);
+  const animeList = await handleGetList(page, sort, search);
 
   const initialStates = {
     page,
     sort,
     search,
-    list,
-    count,
+    animeList,
   };
 
   return { initialStates };
