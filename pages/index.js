@@ -39,10 +39,6 @@ const Home = ({ initialStates }) => {
   const [loading, setLoading] = useState(false);
 
   const updateList = async () => {
-    //Ajuda a não ocorrer novas requests.
-    if (loading) return;
-
-    setLoading(true);
     const animeList = await handleGetList(page, sort, search);
     setAnimeList(animeList);
   };
@@ -54,20 +50,26 @@ const Home = ({ initialStates }) => {
     }
   }, [animeList]);
 
+  useEffect(() => {
+    if (loading) {
+      updateList();
+    }
+  }, [page, search, sort]);
+
   const onChangePage = (newPage) => {
+    setLoading(true);
     setPage(newPage);
     router.push(`/?page=${newPage}`, undefined, { shallow: true });
-    updateList();
   };
 
   const onChangeSort = (newSort) => {
+    setLoading(true);
     setSort(newSort);
-    updateList();
   };
 
   const onSearch = (newSearch) => {
+    setLoading(true);
     setSearch(newSearch);
-    updateList();
   };
 
   const renderCards = () => {
